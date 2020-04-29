@@ -29,7 +29,16 @@
                 </label>
                 <!-- 在vue中，使用事件绑定，为元素制定处理函数的时候，如果加了小括号，就可以给函数传参 -->
                 <input type="button" value="添加" class="btn btn-primay" @click="add()">
-              </div>
+              
+                <label>
+                    搜索关键字:
+                    <input type='text' class="form-control" v-model="keywords">
+
+                </label>
+            
+
+            
+            </div>
         </div>
         
 
@@ -44,7 +53,10 @@
                </tr>
            </thead>
            <tbody>
-               <tr v-for="item in list" :key="item.id">
+               <!-- 之前v-for中的数据都是由data上的list中直接渲染过来 -->
+               <!-- 现在自定义search方法，同时，把所有关键字通过传参的方式传给search方法 -->
+                <!-- 在search()内部，通过for循环，把所有符合换剪子的数据，保存到一个新数组 -->
+               <tr v-for="item in search(keywords)" :key="item.id">
                    <td>{{ item.id }}</td>
                    <td v-text="item.name"></td>
                    <td>{{item.ctime}}</td>
@@ -64,6 +76,7 @@
     data: {
         id:'',
         name:'',
+        keywords:'',
         list:[
             {id:1,name:'奔驰',ctime:new Date()},
             {id:2,name:'宝马',ctime:new Date()}
@@ -100,7 +113,28 @@
             })
             console.log(index)
             this.list.splice(index,1)
+        },
+        search(keywords){//根据关键字进行数据的搜索
+        //     var newList=[]
+        //     this.list.forEach(item => {
+        //         if(item.name.indexOf(keywords)!=-1){
+        //             newList.push(item)
+        //         }
+        //     });
+        // return newList
 
+        // forEach  some  filter   findIndex  都属于数组新方法，都会对数组的每一项进行遍历，执行相关操作
+               return this.list.filter(item => {  
+                // if(item.name.indexOf(keywords)!=-1)
+                
+                
+                // ES6为字符串提供新方法，叫做String.prototype.includes('要包含的字符串')
+                // 如果包含，返回true，不包含，false
+                if(item.name.includes(keywords)){
+                    return item
+                }
+            })
+            
         }
     },
     });
