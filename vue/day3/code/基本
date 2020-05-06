@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="./lib/vue.js"></script> 
+
 </head>
 <body>
+    <div id="app"></div>
     <script>
-        function show(){
-            console.log('ok')
-        }
+    var vm = new Vue({
+    el: '#app',
+    data: {
+    
+    },
+    methods: {
+    
+    },
+    });
     </script>
-
-<script src="http://127.0.0.1:3000/getscript"></script>
 </body>
 </html>
