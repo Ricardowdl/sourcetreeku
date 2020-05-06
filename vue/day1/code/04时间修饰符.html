@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script> 
+    <style>
+        .inner{
+            height: 150px;
+            background-color: darkcyan;
+        }
+        .outer{
+            padding: 40px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+         <div class="inner" @click="div1Handler">
+            <!-- 使用.stop阻止冒泡-->
+            <input type="button" value="戳他" @click.stop="btnHandler">
+        </div>    
+        <!--  使用.prevent阻止默认行为-->
+        <a href="http://www.baidu.com" @click.prevent="linkclick">去百度</a>
+
+       <!-- 只用.capture 实现捕获事件触发机制 -->
+        <!-- <div class="inner" @click.capture="div1Handler">
+            <input type="button" value="戳他" @click="btnHandler">
+        </div>    -->
+
+        <!-- 使用.self实现只有点击当前元素的时候，才会触发当前函数-->
+        <!-- <div class="inner" @click.self="div1Handler">
+            <input type="button" value="戳他" @click="btnHandler">
+        </div>    -->
+
+        <!--  使用.once 只触发一次事件处理函数-->
+        <a href="http://www.baidu.com" @click.prevent.once="linkclick">去百度</a>
+   <!-- .stop和.self的区别 -->
+   <!--  .self只会阻止自己身上的冒泡行为的出发-->
+    <div class="outer" @click="div2Handler">
+    <div class="inner" @click.stop="div1Handler">
+   
+    <input type="button" value="戳他" @click="btnHandler">
+    </div> 
+    </div>
+   
+   
+    </div>
+    <script>
+    var vm = new Vue({
+    el: '#app',
+    data: {
+    
+    },
+    methods: {
+        div1Handler(){
+            console.log('出发inner div 点击事件')
+        },
+        btnHandler(){
+            console.log('出发btn按钮')
+        },
+        linkclick(){
+            console.log('触发这个连接')
+        },
+        div2Handler(){
+            console.log('出发了outer div')
+        }
+    },
+    });
+    </script>
+</body>
+</html>

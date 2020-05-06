@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+    <style>
+        [v-clock]{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 用v-clock能解决插值表达式闪烁-->
+        <p v-cloak>{{msg}}</p>
+        <h4 v-text="msg"></h4>
+        <!-- 1.默认v-text没有闪烁问题 2.v-text会覆盖元素中的基本雷人，但是 插值表达式，智慧替换这个占位符，不会把元素内容清空 -->
+   
+    <div>{{msg2}}</div>
+    <div v-text='msg2'></div>
+    <div v-html="msg2"></div>
+        <!-- v-bind：用于绑定属性的指令 -->
+        <!-- v-bind可以简写为 :绑定的属性 -->
+        <!-- v-bind可以写合法的JS表达式 -->
+        
+        
+        <!-- v-on事件绑定机制,缩写@ -->
+        <input type="button" value="mytitle" :title="mytitle+'123'" v-on:click="show">
+
+    </div>
+</body>
+
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            msg:'123',
+            msg2: ' <h1>哒哒哒哒哒</h1> ',
+            mytitle:'这是自己定义'
+        },
+        methods:{   //这个methods属性中定义了当前vue实例所有可用的方法
+            show:function(){
+                alert("hello")
+            }
+        }
+    })
+</script>
+</html>
+
+
+
+

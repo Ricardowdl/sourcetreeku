@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script> 
+</head>
+<body>
+    
+    <div id="app" >
+        <input type="button" value="转动" @click="lang">
+        <input type="button" value="定" @click="stop">
+        
+        <h4> {{msg}}</h4>
+</div>
+    <script>
+        //在VM中，想要获取data上的数据或者要调用methods中的方法，必须要用this来访问，this表示new出来的实例对象
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                msg:'我是温东霖',
+                intervalId:null
+            },
+            methods:{
+                lang(){
+                    if(this.intervalId != null) return;
+                    //判断，不加的话，点击多次转动，会开启多个计数器
+
+                    this.intervalId= setInterval(() => {
+                    console.log(this.msg)
+                    //获取到头的第一个字符
+                    var start=this.msg.substring(0,1)
+                    //获取到后面所有字符
+                    var end=this.msg.substring(1)
+                    //从新拼接得到的字符串，赋值给this.msg
+                    this.msg=end+start
+                   },400)
+                
+
+
+            // methods:{
+            //     lang(){
+            //         var _this=this
+            //        setInterval(function(){
+            //         console.log(this.msg)
+            //         //获取到头的第一个字符
+            //         var start=_this.msg.substring(0,1)
+            //         //获取到后面所有字符
+            //         var end=_this.msg.substring(1)
+            //         //从新拼接得到的字符串，赋值给this.msg
+            //         _this.msg=end+start
+            //        },400)
+                    //VM实例，会监听自己身上data的数据改变，只要数据发生变化，就会自动把最新的数据从data上同步到页面上
+                    //好处，只需注意数据，不需考虑如何重新渲染
+                }
+                ,stop(){
+                        clearInterval(this.intervalId)
+                        //每当清除定时器后，需从新把intervalId设为null
+                        this.intervalId=null;
+                   }
+            }
+        })
+
+
+
+        //1.给【转动】绑定一个点击事件给 v-on
+        //2.在按钮的事件处理函数写相关业务的逻辑代码：拿到msg字符串，然后使用字符串的substring来进行字符串的截取操作，把第一个字符截取出来，放到最后一个位置即可
+        //3.自动截取功能，需要把2中的代码，放到一个定时器中
+    </script>
+</body>
+</html>
