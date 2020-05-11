@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script> 
+
+</head>
+<body>
+    <div id="app">
+        <cpn></cpn>
+    </div>
+
+
+    <!-- 1 类型必须是text/x-template -->
+    <!-- <script type="text/x-template" id="cpn">
+    <div>
+        <h2>标题</h2>
+        <p>123</p>
+    </div>
+    </script>  -->
+
+    <!-- template标签 -->
+    <template id="cpn">
+        <div>
+            <h2>标题{{title}}</h2>
+            <p>123</p>
+        </div>
+    </template>
+
+<script>
+    //1注册一个全剧组件
+    Vue.component('cpn',{
+        template:'#cpn',
+        data(){
+            return {
+                title:'abc'    //data 需要是一个函数，返回一个对象，对象内部保存着数据
+            }
+        }
+    })
+
+    var vm = new Vue({
+    el: '#app',
+    data: {
+        message:'hello'
+    },
+    
+    methods: {
+    
+    },
+    });
+</script>
+</body>
+</html>
