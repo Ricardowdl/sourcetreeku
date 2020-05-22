@@ -9,8 +9,10 @@
 </head>
 <body>
     <!-- 父组件模板 -->
-    <div id="app">
-        <cpn @item-click="cpnClick"> </cpn>
+    <div id="app" >
+        <!-- 绑定messagefuchange方法 -->
+        <cpn @item-click="cpnClick" @messagefuchange="messagefuchange">   </cpn>
+        {{messagefu}}
     </div>
 
     <!-- 子组件模板 -->
@@ -20,7 +22,12 @@
                     @click="btnClick(item)">
                 {{item.name}}
             </button>
+            <h2 v-for="item in categories">{{item.id}}</h2>
+            <!-- input绑定id的值并且通过事件更改 -->
+            <input type="text" :value="categories[0].id" @input="id0Input" >
 
+            <h2>{{message}}</h2>
+            <input type="text" :value="message" @input="minput" >
         </div>
     </template>
 <script>
@@ -35,13 +42,23 @@
                     {id:'bbb',name:'手机数码',},
                     {id:'ccc',name:'家勇家电',},
                     {id:'ddd',name:'电脑办公',},
-                ]
+                ],
+                message:'23333'
             }
         },
         methods:{
             btnClick(item){
             //发射
                 this.$emit('item-click',item)
+            },
+            id0Input(event){//绑定id0Input事件，监听每次更改并改变id的值
+                this.categories[0].id = event.target.value;
+            },
+            minput(event){//绑定修改！子组件！message
+                this.message=event.target.value;
+                //为了给父组件传参，发出一个事件
+                this.$emit('messagefuchange',this.message)
+                //发射方法，参数message
             }
         }
     }
@@ -50,7 +67,7 @@
     var vm = new Vue({
     el: '#app',
     data: {
-        message:'你好啊'
+        messagefu:'你好啊'
     },
     components:{
         cpn
@@ -58,6 +75,9 @@
     methods: {
         cpnClick(item){
             console.log('cpnClick',item);
+        },
+        messagefuchange(message){//绑定messagefu方法，通过传值改变父组件中message的值，
+            this.messagefu=message
         }
     },
     });
